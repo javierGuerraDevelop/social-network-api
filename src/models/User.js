@@ -11,10 +11,7 @@ const UserSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/,
-      'Please fill a valid email address',
-    ],
+    match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(([^<>()[\]\\.,;:\s@"]+\.)+[^<>()[\]\\.,;:\s@"]{2,})$/,
   },
   thoughts: [
     {
@@ -22,7 +19,7 @@ const UserSchema = new Schema({
       ref: 'Thought',
     },
   ],
-  thoughts: [
+  friends: [
     {
       type: Types.ObjectId,
       ref: 'User',
@@ -30,7 +27,7 @@ const UserSchema = new Schema({
   ],
 });
 
-UserSchema.virtual('friendCount').get(() => {
+UserSchema.virtual('friendCount').get(function() {
   return this.friends.length;
 });
 
